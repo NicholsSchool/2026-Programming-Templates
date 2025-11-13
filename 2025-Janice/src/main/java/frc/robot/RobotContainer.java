@@ -405,6 +405,7 @@ public class RobotContainer {
     operatorController.povDown().onTrue(elevator.runGoToPosCommand(Constants.ElevatorConstants.kAlgaeL2));
     operatorController.povRight().onTrue(new InstantCommand(() -> deAlgifier.lateratorOut()));
     operatorController.povLeft().onTrue(new InstantCommand(() -> deAlgifier.lateratorIn()));
+    operatorController.rightTrigger(0.8).whileTrue(new RepeatCommand( new InstantCommand( () -> outtake.outtakeTele(), outtake )));
 
     elevator.setDefaultCommand(new InstantCommand(() -> elevator.runManualPos(operatorController.getLeftY()), elevator));
 
