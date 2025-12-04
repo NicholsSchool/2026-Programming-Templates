@@ -26,7 +26,8 @@ Inputs: encoder pos
 Intake
 Outtake
 
-Inputs: hasGamepiece
+Inputs: hasGamepiece, voltage
+
 Shooter
 setRPM
 getRPM
