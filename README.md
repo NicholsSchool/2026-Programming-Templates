@@ -27,7 +27,7 @@ Intake
 Outtake
 
 Inputs: hasGamepiece
-Shooter
+# Shooter
 setRPM
 getRPM
 
