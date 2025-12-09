@@ -86,7 +86,7 @@ public class Shooter extends SubsystemBase {
 
     // Update tunable numbers
     if (kP.hasChanged(hashCode()) || kD.hasChanged(hashCode())) {
-      controller.setP(kP.get());
+      controller.setP(kP.get()); //kD, and kP may also be K and D inside shooter constants
       controller.setD(kD.get());
     }
 
