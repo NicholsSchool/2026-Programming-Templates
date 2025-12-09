@@ -1,14 +1,4 @@
 package frc.robot;
-
-import com.pathplanner.lib.config.ModuleConfig;
-import com.pathplanner.lib.config.RobotConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 
 /**
@@ -76,7 +66,16 @@ public final class Constants {
   }
 
   public static final class IndexerConstants{
+    public static double kP = 2.54;
+    public static double kI = 0.00;
+    public static double kD = 0.003;
 
+    public static double kMaxAccel = 1;
+    public static double kMaxVel = 10;
+
+    public static double shiftLengthIN = 12;
+    public static double inchesPerRadian = 2 / Math.PI; // 4 Inch Belt Pulley
+    public static double gearRatio = 1.0;
   }
 
   public static final class ArmConstants{
