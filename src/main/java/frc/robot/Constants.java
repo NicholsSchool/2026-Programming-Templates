@@ -18,7 +18,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
-  public static class ShooterConstants.extends Constants{
+  public static class ShooterConstants extends Constants{
     public static double SHOOTER_RPM = 1;
     public static double REVERSE_RPM = 1;
     public static double DELIVER_RPM = 1;
