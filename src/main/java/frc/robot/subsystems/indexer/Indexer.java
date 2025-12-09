@@ -79,28 +79,32 @@ public class Indexer extends SubsystemBase {
     }
     
     public void setTargetPos(double targetPosition) {
+        this.state = IndexerState.POSITION;
         this.targetPosition = targetPosition;
         PIDController.setGoal((targetPosition));
         PIDController.reset(inputs.indexerPositionIN);
         atTargetPosition = false;
     }
-    
-    public Command runGoToPosCommand(double targetPosition){
-        state = IndexerState.POSITION;
-        System.out.println("Indexer TargetPosition is now:" + targetPosition );
-        return new InstantCommand(() -> setTargetPos(targetPosition), this);
+
+    //This command will continuously update the manual voltage when assigned to a control.
+    //If the input is greater than the deadband, it will override any shift commands.
+    public Command runManual(double input) {
+        return new InstantCommand(
+            () -> {
+                if (input < Constants.JOYSTICK_DEADBAND) {
+                    state = IndexerState.MANUAL;
+                }
+                setVoltage(input * IndexerConstants.baseVoltage);
+            },
+            this);
     }
     
-    public void startGoToPos(double targetPosition){
-        state = IndexerState.POSITION;
-        System.out.println("Starting Shift to:" + targetPosition );
-        setTargetPos(targetPosition);
-    }
-    
+    //This command will shift the position of the indexer by shiftLengthIN. It will run until the shift is complete.
+    //If interrupted, it will set the target position to the indexer's current position, which stops it.
     public Command shiftCommand(ShiftDirection dir) {
         double shiftAmountIN = IndexerConstants.shiftLengthIN * dir.multiplier;
         return new FunctionalCommand(
-        () -> startGoToPos(this.targetPosition + shiftAmountIN),
+        () -> setTargetPos(this.targetPosition + shiftAmountIN),
         () -> state = IndexerState.POSITION,
         interrupted -> setTargetPos(inputs.indexerPositionIN),
         () -> this.hasReachedTarget(),

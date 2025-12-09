@@ -66,16 +66,18 @@ public final class Constants {
   }
 
   public static final class IndexerConstants{
+    //TODO: Tune
     public static double kP = 2.54;
     public static double kI = 0.00;
     public static double kD = 0.003;
 
-    public static double kMaxAccel = 1;
-    public static double kMaxVel = 10;
+    public static double kMaxAccel = 1; // In/Sec/Sec
+    public static double kMaxVel = 10; // In/Sec
 
-    public static double shiftLengthIN = 12;
-    public static double inchesPerRadian = 2 / Math.PI; // 4 Inch Belt Pulley
+    public static double shiftLengthIN = 12; //How much to shift by every time. Usually close to the game piece width.
+    public static double inchesPerRadian = 2 / Math.PI; // Inches of shift per radian of rotation. (Wheel Circumference / 2pi)
     public static double gearRatio = 1.0;
+    public static double baseVoltage = 12.0; // Maximum voltage that the manual command will run at.
   }
 
   public static final class ArmConstants{
