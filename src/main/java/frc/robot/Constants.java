@@ -102,6 +102,10 @@ public final class Constants {
     public static final double MODULE_ONE_ENCODER_OFFSET = 0.0;
     public static final double MODULE_TWO_ENCODER_OFFSET = 0.0;
     public static final double MODULE_THREE_ENCODER_OFFSET = 0.0;
+
+    public static double DRIVING_MOTOR_CURRENT_LIMIT = 30.0;
+    public static final double MOTOR_SUPPLY_CURRENT_LIMIT = 30.0;
+    public static final double TURNING_MOTOR_CURRENT_LIMIT = 30.0;
   }
 
   public static final class ElevatorConstants{
