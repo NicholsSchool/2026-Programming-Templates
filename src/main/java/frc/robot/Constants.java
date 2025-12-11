@@ -64,6 +64,14 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants{
+
+    public static final double ELEVATOR_MAX_ACCELERATION_RAD = 0;
+    public static final double ELEVATOR_MAX_VELOCITY_RAD = 0;
+    public static final double ELEVATOR_P = 0;
+    public static final double ELEVATOR_I = 0;
+    public static final double ELEVATOR_D = 0;
+    public static final double ELEVATOR_MAX_HEIGHT = 0;
+    public static final double ELEVATOR_MIN_HEIGHT = 0;
   
   }
 
