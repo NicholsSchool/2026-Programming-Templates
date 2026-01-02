@@ -6,6 +6,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterIO;
+import frc.robot.subsystems.shooter.ShooterIOSim;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -14,9 +18,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final Shooter shooter;
+  public static CommandXboxController driveController = new CommandXboxController(0);
 
   public RobotContainer() {
-   
+    shooter = new Shooter(new ShooterIOSim());
+    configureButtonBindings();
     }
 
 
@@ -29,8 +36,6 @@ public class RobotContainer {
    
   }
 
-
-
  
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -39,7 +44,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    shooter.setDefaultCommand(new InstantCommand(() -> shooter.stop(),shooter));
+    driveController.a().whileTrue(new InstantCommand(() -> shooter.setShoot(),shooter).repeatedly());
   }
 
   // /**

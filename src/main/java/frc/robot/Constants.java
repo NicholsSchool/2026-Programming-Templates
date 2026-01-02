@@ -72,11 +72,10 @@ public final class Constants {
   }
 
   public static final class ShooterConstants{
-    public static final double SHOOTER_RPM = 1;
-    public static final double REVERSE_RPM = 1;
-    public static final double DELIVER_RPM = 1;
-    public static final double P = 1; //This is a constant for position control
-    public static final double D = 1; //This is a constant for position control
+    public static final double SHOOTER_RPM = 3000;
+    public static final double REVERSE_RPM = -3000;
+    public static final double P = 1.0; //This is a constant for position control
+    public static final double D = 0.0; //This is a constant for position control
   }
 
   public static final class IndexerConstants{

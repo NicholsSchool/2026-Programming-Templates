@@ -22,42 +22,39 @@ public class Shooter extends SubsystemBase {
 
 
   public static final LoggedTunableNumber shootVelocity =
-      new LoggedTunableNumber("Outtake/AmpVelocityRPMs");
+      new LoggedTunableNumber("Shooter/AmpVelocityRPMs");
   public static final LoggedTunableNumber deliverVelocity =
-      new LoggedTunableNumber("Outtake/SpeakerVelocityRPMs");
+      new LoggedTunableNumber("Shooter/SpeakerVelocityRPMs");
   public static final LoggedTunableNumber reverseVeloctiy =
-      new LoggedTunableNumber("Outtake/TrapVelocityRPMs");
+      new LoggedTunableNumber("Shooter/TrapVelocityRPMs");
   public static final LoggedTunableNumber spinDurationSec =
-      new LoggedTunableNumber("Outtake/SpinDurationSec");
-  private static final LoggedTunableNumber kP = new LoggedTunableNumber("Outtake/kP");
-  private static final LoggedTunableNumber kD = new LoggedTunableNumber("Outtake/kD");
+      new LoggedTunableNumber("Shooter/SpinDurationSec");
+  private static final LoggedTunableNumber kP = new LoggedTunableNumber("Shooter/kP");
+  private static final LoggedTunableNumber kD = new LoggedTunableNumber("Shooter/kD");
 
 
   private PIDController controller = new PIDController(0.0, 0.0, 0.0);
   private final SimpleMotorFeedforward ffModel;
 
 
-  private static enum OuttakeMode {
+  private static enum ShooterMode {
     kStopped,
     kShoot,
-    kDeliver,
     kReverse
   };
 
 
-  private OuttakeMode mode = OuttakeMode.kStopped;
+  private ShooterMode mode = ShooterMode.kStopped;
 
 
   public Shooter(ShooterIO io) {
-    System.out.println("[Init] Creating Outtake");
+    System.out.println("[Init] Creating Shooter");
     this.io = io;
-    io.setBrakeMode(false);
 
 
     // Sets the default using ShooterConstants // MAKE SHOOTER CONSTANTS!!! Simply fill-in
     shootVelocity.initDefault(Constants.ShooterConstants.SHOOTER_RPM);
     reverseVeloctiy.initDefault(Constants.ShooterConstants.REVERSE_RPM);
-    deliverVelocity.initDefault(Constants.ShooterConstants.DELIVER_RPM);
     spinDurationSec.initDefault(1.5);
     kP.initDefault(Constants.ShooterConstants.P);
     kD.initDefault(Constants.ShooterConstants.D);
@@ -71,7 +68,7 @@ public class Shooter extends SubsystemBase {
         break;
       case ROBOT_SIM:
       default:
-        ffModel = new SimpleMotorFeedforward(0.0, 0.0055);
+        ffModel = new SimpleMotorFeedforward(1, 1);
         break;
     }
   }
@@ -81,7 +78,7 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     setpoint = 0.0;
     io.updateInputs(inputs);
-    Logger.processInputs("Outtake", inputs);
+    Logger.processInputs("shooter", inputs);
 
 
     // Update tunable numbers
@@ -93,16 +90,12 @@ public class Shooter extends SubsystemBase {
 
     // Reset when disabled
     if (DriverStation.isDisabled()) {
-      io.setVoltage(0.0);
       controller.reset();
-      mode = OuttakeMode.kStopped;
+      mode = ShooterMode.kStopped;
     } else {
       switch (mode) {
         case kShoot:
           setpoint = shootVelocity.get();
-          break;
-        case kDeliver:
-          setpoint = deliverVelocity.get();
           break;
         case kReverse:
           setpoint = reverseVeloctiy.get();
@@ -113,30 +106,23 @@ public class Shooter extends SubsystemBase {
       }
 
 
-      voltageCommand = ffModel.calculate(setpoint);
+      voltageCommand = controller.calculate(inputs.velocityRPMs, setpoint);
       io.setVoltage(MathUtil.clamp(voltageCommand, -12.0, 12.0));
     }
   }
 
-
-  //Deliver acts as a set speed mode. works the same as Shoot
-  public void setDeliver() {
-    mode = OuttakeMode.kDeliver;
-  }
-
-
   public void setShoot() {
-    mode = OuttakeMode.kShoot;
+    mode = ShooterMode.kShoot;
   }
 
 
   public void setReverse() {
-    mode = OuttakeMode.kReverse;
+    mode = ShooterMode.kReverse;
   }
 
 
   public void stop() {
-    mode = OuttakeMode.kStopped;
+    mode = ShooterMode.kStopped;
   }
 
 
