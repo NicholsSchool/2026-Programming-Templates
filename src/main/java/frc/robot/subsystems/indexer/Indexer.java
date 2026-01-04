@@ -53,7 +53,7 @@ public class Indexer extends SubsystemBase {
     public void periodic(){
         io.updateInputs(inputs);
         
-        Logger.processInputs("Elevator", inputs);
+        Logger.processInputs("Indexer", inputs);
 
         double voltage = 0.0;
         
