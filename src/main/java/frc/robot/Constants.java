@@ -57,8 +57,13 @@ public final class Constants {
   
   }
 
-  public static final class IntakeOuttakeConstants {
+  public static final class IntakeOuttakeConstants
+  {
+    public static final double kP = -0.0;
+    public static final double kI = -0.0;
 
+    public static final double INTAKE_VOLTAGE = -0.0;
+    public static final double OUTTAKE_VOLTAGE = -0.0;
   }
 
   public static final class ShooterConstants{
