@@ -48,6 +48,10 @@ public final class Constants {
   // CAN IDs (Controller Area Network)
   public static final class CAN {
 
+    public static final int LEFT_ARM_SHOULDER = -1;
+    public static final int RIGHT_ARM_SHOULDER = -1;
+    public static final int ARM_ENCODER = -1;
+
   }
 
   public static final class RobotConstants {
@@ -80,7 +84,25 @@ public final class Constants {
   }
 
   public static final class ArmConstants{
+
+    public static final double ARM_P = 0.0;
+    public static final double ARM_I = 0.0;
+    public static final double ARM_D = 0.0;
+
+    public static final double ARM_FF_KS = 0.0;
+    public static final double ARM_FF_KG = 0.0;
+    public static final double ARM_FF_KV = 0.0;
+    public static final double ARM_FF_KA = 0.0;
+
+    public static final double ARM_MAX_VEL = 0.0;
+    public static final double ARM_MAX_ACCEL = 0.0;
+
+    public static final double ARM_CURRENT_LIMIT = 0.0;
+    public static final double ARM_GEAR_RATIO = 0.0;
     
+    
+
+  
   }
 
 
